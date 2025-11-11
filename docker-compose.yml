@@ -1,6 +1,6 @@
 services:
   postgres:
-    container_name: postgres
+    container_name: valetax_postgres
     image: postgres
     restart: always
     environment:
