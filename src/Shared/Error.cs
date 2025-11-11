@@ -15,7 +15,7 @@ public record Error
         InvalidField = invalidField;
     }
 
-    public static Error NotFound(string message, Guid? id) => new("value.not.found", message, ErrorType.NOT_FOUND);
+    public static Error NotFound(string message, string name) => new("value.not.found", message, ErrorType.NOT_FOUND);
     
     public static Error Conflict(string? code, string message) => new(code ?? "value.is.conflict", message, ErrorType.CONFLICT);
 

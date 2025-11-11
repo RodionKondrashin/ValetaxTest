@@ -6,11 +6,11 @@ namespace Valetax.Application.Trees;
 
 public interface ITreesRepository
 {
-    Task<Result<Tree, Error>> GetTreeAsync(string treeName);
+    Task<Result<Tree, Error>> GetTreeAsync(string treeName, CancellationToken cancellationToken);
     
-    Task<Result<Node, Error>> AddNodeAsync(string treeName, long? parentNodeId, string nodeName);
+    Task<Result<Node, Error>> AddNodeAsync(Node node, CancellationToken cancellationToken);
     
-    Task<Result<Node, Error>> RenameNodeAsync(long nodeId, string newNodeName);
+    Task<Result<long, Error>> RenameNodeAsync(long nodeId, string newNodeName, CancellationToken cancellationToken);
     
-    Task<UnitResult<Error>> DeleteNodeAsync(long nodeId);
+    Task<UnitResult<Error>> DeleteNodeAsync(Node node, CancellationToken cancellationToken);
 }
