@@ -1,4 +1,4 @@
-﻿namespace ValetaxTest.Domain.Nodes;
+﻿namespace ValetaxTest.Domain.Trees;
 
 public class Node
 {
