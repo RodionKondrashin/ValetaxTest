@@ -4,6 +4,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{306A4B01-344
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ValetaxTest.Web", "src\ValetaxTest.Web\ValetaxTest.Web.csproj", "{1C98FB6C-D006-4B34-B314-E1231933F467}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ValetaxTest.Domain", "src\ValetaxTest.Domain\ValetaxTest.Domain.csproj", "{A7DB5883-5E4F-48D6-AD3B-6CCD97522A9F}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -14,8 +16,13 @@ Global
 		{1C98FB6C-D006-4B34-B314-E1231933F467}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1C98FB6C-D006-4B34-B314-E1231933F467}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1C98FB6C-D006-4B34-B314-E1231933F467}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A7DB5883-5E4F-48D6-AD3B-6CCD97522A9F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A7DB5883-5E4F-48D6-AD3B-6CCD97522A9F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A7DB5883-5E4F-48D6-AD3B-6CCD97522A9F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A7DB5883-5E4F-48D6-AD3B-6CCD97522A9F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{1C98FB6C-D006-4B34-B314-E1231933F467} = {306A4B01-344F-427E-9CBA-33443D16DE0B}
+		{A7DB5883-5E4F-48D6-AD3B-6CCD97522A9F} = {306A4B01-344F-427E-9CBA-33443D16DE0B}
 	EndGlobalSection
 EndGlobal
