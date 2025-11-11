@@ -1,16 +1,16 @@
 services:
   postgres:
-    container_name: valetax_postgres
+    container_name: valetax_postgres_container
     image: postgres
     restart: always
     environment:
-      POSTGRES_DB: valetax_test_db
+      POSTGRES_DB: velatax_db
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: postgres
     ports:
       - "5434:5432"
     volumes:
-      - postgres-data:/var/lib/postgresql/data
+      - valetax_postgres_data:/var/lib/postgresql/data
 
 volumes:
-  postgres-data:
+  valetax_postgres_data:
