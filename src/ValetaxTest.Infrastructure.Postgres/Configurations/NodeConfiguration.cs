@@ -26,7 +26,7 @@ public class NodeConfiguration : IEntityTypeConfiguration<Node>
         builder.HasOne(n => n.Parent)
             .WithMany(p => p.Children)
             .HasForeignKey(n => n.ParentId)
-            .OnDelete(DeleteBehavior.Restrict);
+            .OnDelete(DeleteBehavior.Cascade);
         
         builder.HasIndex(n => n.Name).IsUnique();
     }
