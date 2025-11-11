@@ -14,4 +14,8 @@
       <Folder Include="Controllers\" />
     </ItemGroup>
 
+    <ItemGroup>
+      <ProjectReference Include="..\ValetaxTest.Infrastructure.Postgres\ValetaxTest.Infrastructure.Postgres.csproj" />
+    </ItemGroup>
+
 </Project>
