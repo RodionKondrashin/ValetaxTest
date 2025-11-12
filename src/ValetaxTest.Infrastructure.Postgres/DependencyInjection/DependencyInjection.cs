@@ -1,6 +1,7 @@
 ﻿using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
+using Valetax.Application.ExceptionJournals;
 using Valetax.Application.Trees;
 using ValetaxTest.Infrastructure.Postgres.Repositories;
 
@@ -18,6 +19,9 @@ public static class DependencyInjection
 
         services.AddScoped<ITreesRepository, TreesRepository>();
         services.AddScoped<ITreesService, TreesService>();
+        
+        services.AddScoped<IExceptionJournalsRepository, ExceptionJournalsRepository>();
+        services.AddScoped<IExceptionJournalsService, ExceptionJournalsService>();
         
         return services;
     }
