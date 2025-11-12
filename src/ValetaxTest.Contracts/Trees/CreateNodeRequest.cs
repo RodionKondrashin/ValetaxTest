@@ -1,3 +1,3 @@
 ﻿namespace ValetaxTest.Contracts.Trees;
 
-public record CreateNodeRequest(string TreeName, long? ParentNodeId);
+public record CreateNodeRequest(string TreeName, long? ParentNodeId, string NodeName);
