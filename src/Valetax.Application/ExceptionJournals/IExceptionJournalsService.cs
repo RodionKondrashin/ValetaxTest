@@ -5,7 +5,7 @@ namespace Valetax.Application.ExceptionJournals;
 
 public interface IExceptionJournalsService
 {
-    Task<RangeDto<JournalDto>> GetRangeAsync(int skip, int take, GetJournalsFilter filter);
+    Task<MRange_MJournalInfo<MJournalInfo>> GetRangeAsync(int skip, int take, VJournalFilter filter);
     
-    Task<JournalFullInfoDto> GetSingleAsync(long id);
+    Task<MJournal> GetSingleAsync(long id);
 }

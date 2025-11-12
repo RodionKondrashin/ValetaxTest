@@ -4,7 +4,7 @@ namespace Valetax.Application.Trees;
 
 public interface ITreesService
 {
-    Task<TreeDto> GetTreeAsync(string treeName, CancellationToken cancellationToken);
+    Task<MTree> GetTreeAsync(string treeName, CancellationToken cancellationToken);
     
     Task CreateNodeAsync(string treeName, long? parentNodeId, string nodeName, CancellationToken cancellationToken);
     

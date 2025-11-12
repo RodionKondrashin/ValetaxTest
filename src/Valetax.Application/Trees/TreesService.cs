@@ -12,7 +12,7 @@ public class TreesService : ITreesService
         _treesRepository = treesRepository;
     }
 
-    public async Task<TreeDto> GetTreeAsync(string treeName, CancellationToken cancellationToken)
+    public async Task<MTree> GetTreeAsync(string treeName, CancellationToken cancellationToken)
     {
         var tree = await _treesRepository.GetTreeAsync(treeName, cancellationToken);
         if (tree is null)
@@ -24,12 +24,12 @@ public class TreesService : ITreesService
             
             await _treesRepository.AddTreeAsync(newTree, cancellationToken);
 
-            return new TreeDto(newTree.Id, newTree.Name, []);
+            return new MTree(newTree.Id, newTree.Name, []);
         }
         
         if (tree.Nodes.Count == 0)
         {
-            return new TreeDto(tree.Id, tree.Name, []);
+            return new MTree(tree.Id, tree.Name, []);
         }
 
         var lookup = tree.Nodes.ToLookup(n => n.ParentId);
@@ -38,16 +38,16 @@ public class TreesService : ITreesService
 
         var rootNodeDtos = rootNodes.Select(n => MapNodeToDto(n, lookup)).ToArray();
         
-        return new TreeDto(tree.Id, tree.Name, rootNodeDtos);
+        return new MTree(tree.Id, tree.Name, rootNodeDtos);
     }
 
-    private NodeDto MapNodeToDto(Node node, ILookup<long?, Node> lookup)
+    private MNode MapNodeToDto(Node node, ILookup<long?, Node> lookup)
     {
         var children = lookup[node.Id];
         
         var childrenDtos = children.Select(child => MapNodeToDto(child, lookup)).ToArray();
     
-        return new NodeDto(
+        return new MNode(
             node.Id,
             node.Name,
             node.TreeId,

@@ -13,22 +13,22 @@ public class ExceptionJournalsService : IExceptionJournalsService
         _exceptionJournalsRepository = exceptionJournalsRepository;
     }
     
-    public async Task<RangeDto<JournalDto>> GetRangeAsync(int skip, int take, GetJournalsFilter filter)
+    public async Task<MRange_MJournalInfo<MJournalInfo>> GetRangeAsync(int skip, int take, VJournalFilter filter)
     {
         var (totalCount, items) = await _exceptionJournalsRepository.GetRangeAsync(skip, take, filter.FromDate, filter.ToDate);
         
         var journalInfos = items.Select(j =>
-            new JournalDto(j.Id, j.EventId, j.CreatedAt)).ToList();
+            new MJournalInfo(j.Id, j.EventId, j.CreatedAt)).ToList();
 
-        return new RangeDto<JournalDto>
+        return new MRange_MJournalInfo<MJournalInfo>
         {
-            SKip = skip,
+            Skip = skip,
             Count = totalCount,
             Items = journalInfos
         };
     }
 
-    public async Task<JournalFullInfoDto> GetSingleAsync(long id)
+    public async Task<MJournal> GetSingleAsync(long id)
     {
         var journal = await _exceptionJournalsRepository.GetByEventId(id);
 
@@ -37,6 +37,6 @@ public class ExceptionJournalsService : IExceptionJournalsService
             throw new SecureException("ExceptionJournal", id, $"Event with ID {id} not found");
         }
 
-        return new JournalFullInfoDto(journal.Id, journal.EventId, journal.CreatedAt, journal.Text);
+        return new MJournal(journal.Id, journal.EventId, journal.CreatedAt, journal.Text);
     }
 }

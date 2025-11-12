@@ -1,8 +1,8 @@
 ﻿namespace ValetaxTest.Domain.ExceptionJournals.Dtos;
 
-public class RangeDto<T>
+public class MRange_MJournalInfo<T>
 {
-    public int SKip { get; set; }
+    public int Skip { get; set; }
     
     public int Count { get; set; }
 
