@@ -11,6 +11,7 @@
     </ItemGroup>
 
     <ItemGroup>
+      <ProjectReference Include="..\Valetax.Application\Valetax.Application.csproj" />
       <ProjectReference Include="..\ValetaxTest.Domain\ValetaxTest.Domain.csproj" />
     </ItemGroup>
 

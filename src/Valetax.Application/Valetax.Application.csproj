@@ -7,7 +7,9 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <PackageReference Include="CSharpFunctionalExtensions" Version="3.6.0" />
+      <ProjectReference Include="..\Shared\Shared.csproj" />
+      <ProjectReference Include="..\ValetaxTest.Contracts\ValetaxTest.Contracts.csproj" />
+      <ProjectReference Include="..\ValetaxTest.Domain\ValetaxTest.Domain.csproj" />
     </ItemGroup>
 
 </Project>

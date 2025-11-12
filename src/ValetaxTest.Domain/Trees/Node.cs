@@ -6,9 +6,9 @@ public class Node
 
     public required string Name { get; set; }
     
-    public long TreeId { get; set; }
+    public required long TreeId { get; set; }
     
-    public required Tree Tree { get; set; }
+    public Tree Tree { get; set; }
     
     public long? ParentId { get; set; }
     
