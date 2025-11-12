@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using ValetaxTest.Domain.ExceptionJournals;
 using ValetaxTest.Domain.Trees;
 
 namespace ValetaxTest.Infrastructure.Postgres;
@@ -24,4 +25,5 @@ public class ApplicationDbContext : DbContext
     
     public DbSet<Tree> Trees => Set<Tree>();
     public DbSet<Node> Nodes => Set<Node>();
+    public DbSet<ExceptionJournal> ExceptionJournals => Set<ExceptionJournal>();
 }
