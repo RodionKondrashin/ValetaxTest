@@ -1,6 +1,7 @@
 ﻿using CSharpFunctionalExtensions;
 using Shared;
 using ValetaxTest.Contracts.Trees;
+using ValetaxTest.Domain.Exceptions;
 using ValetaxTest.Domain.Trees;
 
 namespace Valetax.Application.Trees;
@@ -14,10 +15,10 @@ public class TreesService : ITreesService
         _treesRepository = treesRepository;
     }
 
-    public async Task<Result<TreeDto, Error>> GetTreeAsync(string treeName, CancellationToken cancellationToken)
+    public async Task<TreeDto> GetTreeAsync(string treeName, CancellationToken cancellationToken)
     {
-        var treeResult = await _treesRepository.GetTreeAsync(treeName, cancellationToken);
-        if (treeResult.Error.Type == ErrorType.NOT_FOUND)
+        var tree = await _treesRepository.GetTreeAsync(treeName, cancellationToken);
+        if (tree is null)
         {
             var newTree = new Tree
             {
@@ -28,12 +29,7 @@ public class TreesService : ITreesService
 
             return new TreeDto(newTree.Id, newTree.Name, []);
         }
-        if (treeResult.IsFailure)
-        {
-            return treeResult.Error;
-        }
         
-        var tree = treeResult.Value;
         if (tree.Nodes.Count == 0)
         {
             return new TreeDto(tree.Id, tree.Name, []);
@@ -63,46 +59,37 @@ public class TreesService : ITreesService
         );
     }
 
-    public async Task<UnitResult<Error>> CreateNodeAsync(string treeName, long? parentNodeId, string nodeName, CancellationToken cancellationToken)
+    public async Task CreateNodeAsync(string treeName, long? parentNodeId, string nodeName, CancellationToken cancellationToken)
     {
         var tree = await GetTreeAsync(treeName, cancellationToken);
-        if (tree.IsFailure)
-        {
-            return tree.Error;
-        }
 
         if (parentNodeId is not null)
         {
-            var parent = await _treesRepository.GetNodeAsync(parentNodeId, tree.Value.Id, cancellationToken);
-            if (parent.IsFailure)
+            var parent = await _treesRepository.GetNodeAsync(parentNodeId, tree.Id, cancellationToken);
+            if (parent is null)
             {
-                return parent.Error;
+                throw new SecureException("Node", parentNodeId.Value, 
+                    $"Parent node {parentNodeId.Value} not found in tree '{treeName}'");
             }
         }
         
         var newNode = new Node
         {
             Name = treeName,
-            TreeId = tree.Value.Id,
+            TreeId = tree.Id,
             ParentId = parentNodeId,
         };
 
-        var result = await _treesRepository.AddNodeAsync(newNode, cancellationToken);
-        
-        return result.IsFailure ? result.Error : UnitResult.Success<Error>();
+        var node = await _treesRepository.AddNodeAsync(newNode, cancellationToken);
     }
 
-    public async Task<UnitResult<Error>> DeleteNodeAsync(long nodeId, CancellationToken cancellationToken)
+    public async Task DeleteNodeAsync(long nodeId, CancellationToken cancellationToken)
     {
         var result = await _treesRepository.DeleteNodeAsync(nodeId, cancellationToken);
-        
-        return result.IsFailure ? result.Error : UnitResult.Success<Error>();
     }
 
-    public async Task<UnitResult<Error>> RenameNodeAsync(long nodeId, string newNodeName, CancellationToken cancellationToken)
+    public async Task RenameNodeAsync(long nodeId, string newNodeName, CancellationToken cancellationToken)
     {
         var result = await _treesRepository.RenameNodeAsync(nodeId, newNodeName, cancellationToken);
-        
-        return result.IsFailure ? result.Error : UnitResult.Success<Error>();
     }
 }

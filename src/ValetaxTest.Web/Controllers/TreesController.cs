@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Valetax.Application.Trees;
-using ValetaxTest.Contracts.Trees;
 
 namespace ValetaxTest.Web.Controllers;
 
@@ -17,7 +17,7 @@ public class TreesController : ControllerBase
 
     [HttpPost("get")]
     public async Task<IActionResult> GetTree(
-        [FromQuery] string treeName,
+        [BindRequired] string treeName,
         CancellationToken cancellationToken)
     {
         var tree = await _treesService.GetTreeAsync(treeName, cancellationToken);
@@ -27,9 +27,9 @@ public class TreesController : ControllerBase
 
     [HttpPost("node.create")]
     public async Task<IActionResult> CreateNode(
-        [FromQuery] string treeName,
+        [BindRequired] string treeName,
         [FromQuery] long? parentNodeId,
-        [FromQuery] string nodeName,
+        [BindRequired] string nodeName,
         CancellationToken cancellationToken)
     {
         await _treesService.CreateNodeAsync(treeName, parentNodeId, nodeName, cancellationToken);
@@ -39,8 +39,8 @@ public class TreesController : ControllerBase
 
     [HttpPost("node.rename")]
     public async Task<IActionResult> RenameNode(
-        [FromQuery] long nodeId,
-        [FromQuery] string newNodeName,
+        [BindRequired] long nodeId,
+        [BindRequired] string newNodeName,
         CancellationToken cancellationToken)
     {
         await _treesService.RenameNodeAsync(nodeId, newNodeName, cancellationToken);
@@ -50,7 +50,7 @@ public class TreesController : ControllerBase
 
     [HttpPost("node.delete")]
     public async Task<IActionResult> DeleteNode(
-        [FromQuery] long nodeId,
+        [BindRequired] long nodeId,
         CancellationToken cancellationToken)
     {
         await _treesService.DeleteNodeAsync(nodeId, cancellationToken);
