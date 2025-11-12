@@ -13,7 +13,7 @@ public static class DependencyInjection
         services.AddScoped<ApplicationDbContext>(_ => 
             new ApplicationDbContext(configuration.GetConnectionString("ValetaxTestDb")!));
         
-        services.AddTransient<JournalDbContext>(_ => 
+        services.AddScoped<JournalDbContext>(_ => 
             new JournalDbContext(configuration.GetConnectionString("ValetaxTestDb")!));
 
         services.AddScoped<ITreesRepository, TreesRepository>();
