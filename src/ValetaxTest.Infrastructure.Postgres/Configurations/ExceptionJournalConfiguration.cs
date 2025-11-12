@@ -14,6 +14,7 @@ public class ExceptionJournalConfiguration : IEntityTypeConfiguration<ExceptionJ
             .HasName("pk_exception_journal");
         
         builder.Property(x => x.Id)
+            .ValueGeneratedOnAdd()
             .HasColumnName("id");
         
         builder.Property(e => e.EventId)

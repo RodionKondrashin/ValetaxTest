@@ -1,17 +1,14 @@
-﻿using CSharpFunctionalExtensions;
-using Shared;
-using ValetaxTest.Contracts.Trees;
-using ValetaxTest.Domain.Trees;
+﻿using ValetaxTest.Domain.Trees;
 
 namespace Valetax.Application.Trees;
 
 public interface ITreesService
 {
-    Task<Result<TreeDto, Error>> GetTreeAsync(GetTreeByNameRequest request, CancellationToken cancellationToken);
+    Task<TreeDto> GetTreeAsync(string treeName, CancellationToken cancellationToken);
     
-    Task<UnitResult<Error>> CreateNodeAsync(CreateNodeRequest request, CancellationToken cancellationToken);
+    Task CreateNodeAsync(string treeName, long? parentNodeId, string nodeName, CancellationToken cancellationToken);
     
-    Task<UnitResult<Error>> DeleteNodeAsync(DeleteNodeRequest request, CancellationToken cancellationToken);
+    Task DeleteNodeAsync(long nodeId, CancellationToken cancellationToken);
     
-    Task<UnitResult<Error>> RenameNodeAsync(RenameNodeRequest request, CancellationToken cancellationToken);
+    Task RenameNodeAsync(long nodeId, string newNodeName, CancellationToken cancellationToken);
 }
