@@ -75,7 +75,7 @@ public class TreesService : ITreesService
         
         var newNode = new Node
         {
-            Name = treeName,
+            Name = nodeName,
             TreeId = tree.Id,
             ParentId = parentNodeId,
         };
