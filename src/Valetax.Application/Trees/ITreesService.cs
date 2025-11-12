@@ -1,7 +1,4 @@
-﻿using CSharpFunctionalExtensions;
-using Shared;
-using ValetaxTest.Contracts.Trees;
-using ValetaxTest.Domain.Trees;
+﻿using ValetaxTest.Domain.Trees;
 
 namespace Valetax.Application.Trees;
 

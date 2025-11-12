@@ -1,8 +1,5 @@
-﻿using CSharpFunctionalExtensions;
-using Microsoft.EntityFrameworkCore;
-using Shared;
+﻿using Microsoft.EntityFrameworkCore;
 using Valetax.Application.Trees;
-using ValetaxTest.Domain.Exceptions;
 using ValetaxTest.Domain.Trees;
 
 namespace ValetaxTest.Infrastructure.Postgres.Repositories;
