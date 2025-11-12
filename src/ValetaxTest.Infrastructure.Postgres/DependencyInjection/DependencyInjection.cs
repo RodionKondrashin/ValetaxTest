@@ -14,6 +14,7 @@ public static class DependencyInjection
             new ApplicationDbContext(configuration.GetConnectionString("ValetaxTestDb")!));
 
         services.AddScoped<ITreesRepository, TreesRepository>();
+        services.AddScoped<ITreesService, TreesService>();
         
         return services;
     }
