@@ -60,7 +60,7 @@ public class TreesRepository : ITreesRepository
         }
     }
 
-    public async Task<Result<Node, Error>> GetNodeAsync(long parentId, long treeId, CancellationToken cancellationToken)
+    public async Task<Result<Node, Error>> GetNodeAsync(long? parentId, long treeId, CancellationToken cancellationToken)
     {
         var node = await _dbContext.Nodes
             .FirstOrDefaultAsync(n => n.Id == parentId && n.TreeId == treeId, cancellationToken);

@@ -14,14 +14,14 @@ public class TreesService : ITreesService
         _treesRepository = treesRepository;
     }
 
-    public async Task<Result<TreeDto, Error>> GetTreeAsync(GetTreeByNameRequest request, CancellationToken cancellationToken)
+    public async Task<Result<TreeDto, Error>> GetTreeAsync(string treeName, CancellationToken cancellationToken)
     {
-        var treeResult = await _treesRepository.GetTreeAsync(request.TreeName, cancellationToken);
+        var treeResult = await _treesRepository.GetTreeAsync(treeName, cancellationToken);
         if (treeResult.Error.Type == ErrorType.NOT_FOUND)
         {
             var newTree = new Tree
             {
-                Name = request.TreeName
+                Name = treeName
             };
             
             await _treesRepository.AddTreeAsync(newTree, cancellationToken);
@@ -63,17 +63,17 @@ public class TreesService : ITreesService
         );
     }
 
-    public async Task<UnitResult<Error>> CreateNodeAsync(CreateNodeRequest request, CancellationToken cancellationToken)
+    public async Task<UnitResult<Error>> CreateNodeAsync(string treeName, long? parentNodeId, string nodeName, CancellationToken cancellationToken)
     {
-        var tree = await GetTreeAsync(new GetTreeByNameRequest(request.TreeName), cancellationToken);
+        var tree = await GetTreeAsync(treeName, cancellationToken);
         if (tree.IsFailure)
         {
             return tree.Error;
         }
 
-        if (request.ParentNodeId.HasValue)
+        if (parentNodeId is not null)
         {
-            var parent = await _treesRepository.GetNodeAsync(request.ParentNodeId.Value, tree.Value.Id, cancellationToken);
+            var parent = await _treesRepository.GetNodeAsync(parentNodeId, tree.Value.Id, cancellationToken);
             if (parent.IsFailure)
             {
                 return parent.Error;
@@ -82,39 +82,27 @@ public class TreesService : ITreesService
         
         var newNode = new Node
         {
-            Name = request.TreeName,
+            Name = treeName,
             TreeId = tree.Value.Id,
-            ParentId = request.ParentNodeId
+            ParentId = parentNodeId,
         };
 
         var result = await _treesRepository.AddNodeAsync(newNode, cancellationToken);
-        if (result.IsFailure)
-        {
-            return result.Error;
-        }
-
-        return UnitResult.Success<Error>();
+        
+        return result.IsFailure ? result.Error : UnitResult.Success<Error>();
     }
 
-    public async Task<UnitResult<Error>> DeleteNodeAsync(DeleteNodeRequest request, CancellationToken cancellationToken)
+    public async Task<UnitResult<Error>> DeleteNodeAsync(long nodeId, CancellationToken cancellationToken)
     {
-        var result = await _treesRepository.DeleteNodeAsync(request.NodeId, cancellationToken);
-        if (result.IsFailure)
-        {
-            return result.Error;
-        }
+        var result = await _treesRepository.DeleteNodeAsync(nodeId, cancellationToken);
         
-        return UnitResult.Success<Error>();
+        return result.IsFailure ? result.Error : UnitResult.Success<Error>();
     }
 
-    public async Task<UnitResult<Error>> RenameNodeAsync(RenameNodeRequest request, CancellationToken cancellationToken)
+    public async Task<UnitResult<Error>> RenameNodeAsync(long nodeId, string newNodeName, CancellationToken cancellationToken)
     {
-        var result = await _treesRepository.RenameNodeAsync(request.NodeId, request.NewNodeName, cancellationToken);
-        if (result.IsFailure)
-        {
-            return result.Error;
-        }
+        var result = await _treesRepository.RenameNodeAsync(nodeId, newNodeName, cancellationToken);
         
-        return UnitResult.Success<Error>();
+        return result.IsFailure ? result.Error : UnitResult.Success<Error>();
     }
 }

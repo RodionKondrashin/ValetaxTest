@@ -12,7 +12,7 @@ public interface ITreesRepository
     
     Task<Result<Node, Error>> AddNodeAsync(Node node, CancellationToken cancellationToken);
 
-    Task<Result<Node, Error>> GetNodeAsync(long parentId, long treeId, CancellationToken cancellationToken);
+    Task<Result<Node, Error>> GetNodeAsync(long? parentId, long treeId, CancellationToken cancellationToken);
     
     Task<Result<long, Error>> RenameNodeAsync(long nodeId, string newNodeName, CancellationToken cancellationToken);
     
